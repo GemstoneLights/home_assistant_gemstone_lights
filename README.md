@@ -20,8 +20,8 @@ the controller (step 4).
 
 ### 3. Install the integration
 
-1. [Download the ZIP](https://github.com/GemstoneLights/home_assistant_gemstone_lights/archive/refs/heads/main.zip)
-   and unzip it.
+1. From the [latest release](https://github.com/GemstoneLights/home_assistant_gemstone_lights/releases/latest),
+   download **Source code (zip)** and unzip it.
 2. Copy `custom_components/gemstone_lights` into `config/custom_components/`,
    creating `custom_components` if needed. This file should then exist:
 

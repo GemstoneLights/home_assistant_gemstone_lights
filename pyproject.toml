@@ -1,5 +1,6 @@
 [project]
 name = "gemstone-home-assistant"
+# Keep in step with manifest.json.
 version = "0.6.0"
 description = "Home Assistant integration for Gemstone Lights Hub2 controllers"
 # The floor for Home Assistant 2024.12, the oldest release this integration supports.
