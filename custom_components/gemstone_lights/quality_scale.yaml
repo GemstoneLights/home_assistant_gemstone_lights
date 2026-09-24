@@ -1,0 +1,129 @@
+# Self-attestation against the Home Assistant Integration Quality Scale.
+# hassfest does not validate this file for a custom integration, so it is only
+# as honest as it is kept. Statuses: done, todo, exempt (with a comment).
+#
+# Bronze is not claimed in manifest.json: two Bronze rules (brands,
+# dependency-transparency) wait on things outside this repository.
+
+rules:
+  # Bronze
+  action-setup:
+    status: done
+    comment: >
+      play_pattern, save_playing and forget_pattern are entity services registered with
+      EntityPlatform.async_register_entity_service from light.py async_setup_entry
+      (the documented exception to registering in async_setup).
+  appropriate-polling: done
+  brands:
+    status: todo
+    comment: >
+      No brand/ directory. HA 2026.3+ serves custom_components/gemstone_lights/brand/{icon,icon@2x,logo}.png
+      and HACS requires at least icon.png. Needs artwork from Gemstone.
+  common-modules: done
+  config-flow: done
+  config-flow-test-coverage: done
+  dependency-transparency:
+    status: todo
+    comment: >
+      The HTTP client is vendored in api.py (deliberately HA-free so it can move to PyPI). None of
+      the rule's conditions hold until it is published to PyPI from public CI with tagged releases.
+      Recorded as todo, not exempt: the client is a dependency in all but packaging.
+  docs-actions: done
+  docs-conditions:
+    status: exempt
+    comment: This integration does not have any conditions.
+  docs-high-level-description: done
+  docs-installation-instructions: done
+  docs-removal-instructions: done
+  docs-triggers:
+    status: exempt
+    comment: This integration does not have any triggers.
+  entity-event-setup:
+    status: exempt
+    comment: No explicit event subscriptions; CoordinatorEntity manages its listener.
+  entity-unique-id:
+    status: done
+    comment: Keyed on the config entry id, so a reconfigured address keeps the same entities and device.
+  has-entity-name: done
+  runtime-data: done
+  test-before-configure: done
+  test-before-setup: done
+  unique-config-entry: done
+
+  # Silver
+  action-exceptions: done
+  config-entry-unloading: done
+  docs-configuration-parameters: done
+  docs-installation-parameters: done
+  entity-unavailable: done
+  integration-owner: done
+  log-when-unavailable:
+    status: done
+    comment: Handled by DataUpdateCoordinator (logs once on UpdateFailed, once on recovery).
+  parallel-updates:
+    status: done
+    comment: 1 on the light and number platforms (each may send a command); 0 on sensor and binary_sensor.
+  reauthentication-flow:
+    status: exempt
+    comment: >
+      The local API has no authentication; the document lists 401 as a "future expansion"
+      (api.py ERROR_MESSAGES). Revisit when access control ships.
+  test-coverage: done
+
+  # Gold
+  devices: done
+  diagnostics: done
+  discovery:
+    status: done
+    comment: >
+      Three routes (design.md 4.12): the controller's Control4 SDDP announcements and search replies,
+      spoken by sddp.py because Home Assistant has no SDDP support; and the dhcp matcher on the
+      gemstone-* hostname. Not mDNS/SSDP: the firmware speaks neither. Bluetooth is not used; the BLE
+      name is user-set, not the serial.
+  discovery-update-info:
+    status: done
+    comment: >
+      Entries are keyed on the serial, so a discovery from a new address updates the entry in place
+      (_abort_if_unique_id_configured with updates) and reloads it.
+  docs-data-update: done
+  docs-examples: done
+  docs-known-limitations: done
+  docs-supported-devices: done
+  docs-supported-functions: done
+  docs-troubleshooting: done
+  docs-use-cases: done
+  dynamic-devices:
+    status: exempt
+    comment: One controller per config entry; the API exposes no sub-devices.
+  entity-category: done
+  entity-device-class:
+    status: done
+    comment: >
+      The light has no device class. Pixel count, firmware strings and the TCP flag have none that fits
+      (CONNECTIVITY would misread a feature flag as link state); left unset rather than forced.
+  entity-disabled-by-default:
+    status: done
+    comment: >
+      firmware_spi, firmware_wifi and tcp_enabled default to disabled; pixel_count stays enabled because
+      it is the one thing that says how long the run is.
+  entity-translations: done
+  exception-translations: done
+  icon-translations: done
+  reconfiguration-flow: done
+  repair-issues:
+    status: exempt
+    comment: >
+      No user-actionable condition is distinguishable: a disabled "Allow Local Commands" looks identical
+      to an offline controller, and IP changes are handled by the reconfigure flow.
+  stale-devices:
+    status: exempt
+    comment: One fixed device per config entry; removed with the entry.
+
+  # Platinum
+  async-dependency: done
+  inject-websession: done
+  strict-typing:
+    status: todo
+    comment: >
+      The known mypy --strict errors in light.py are fixed; mypy is not yet in the dev toolchain and
+      there is no py.typed.

@@ -1,0 +1,139 @@
+# Action descriptions. Names and descriptions come from strings.json; the
+# animation options mirror const.ANIMATIONS and a test keeps them in step.
+
+play_pattern:
+  target:
+    entity:
+      integration: gemstone_lights
+      domain: light
+  fields:
+    animation:
+      required: true
+      example: chase
+      selector:
+        select:
+          options:
+            - label: "Accent"
+              value: accent
+            - label: "Around"
+              value: around
+            - label: "Chase"
+              value: chase
+            - label: "Eyeball"
+              value: eyeball
+            - label: "Fade"
+              value: fade
+            - label: "Fireworks"
+              value: fireworks
+            - label: "Flicker"
+              value: flicker
+            - label: "Flow"
+              value: flow
+            - label: "Ghost"
+              value: ghost
+            - label: "Glitch"
+              value: glitch
+            - label: "Glitter"
+              value: glitter
+            - label: "Gradient Wave"
+              value: gradient_wave
+            - label: "Gradient"
+              value: gradient
+            - label: "IsoFade"
+              value: isofade
+            - label: "Marquee"
+              value: marquee
+            - label: "Motionless"
+              value: motionless
+            - label: "MultiPulse"
+              value: multipulse
+            - label: "Pacman"
+              value: pacman
+            - label: "Pulse"
+              value: pulse
+            - label: "Pyramid Chase"
+              value: pyramid_chase
+            - label: "Smooth"
+              value: smooth
+            - label: "Spectrum"
+              value: spectrum
+            - label: "Spotlight"
+              value: spotlight
+            - label: "Stack"
+              value: stack
+            - label: "Starry"
+              value: starry
+            - label: "Stretch"
+              value: stretch
+            - label: "Sway"
+              value: sway
+            - label: "Tremor"
+              value: tremor
+            - label: "Wave"
+              value: wave
+    colors:
+      required: true
+      example: "[[255, 0, 0, 0], [0, 255, 0, 0], [0, 0, 255, 0]]"
+      selector:
+        object:
+    brightness:
+      example: 200
+      selector:
+        number:
+          min: 0
+          max: 255
+    speed:
+      example: 128
+      selector:
+        number:
+          min: 1
+          max: 255
+    direction:
+      example: Right
+      selector:
+        select:
+          options:
+            - label: "Right"
+              value: "0"
+            - label: "Left"
+              value: "1"
+            - label: "Right & Left"
+              value: "2"
+            - label: "In"
+              value: "3"
+            - label: "Out"
+              value: "4"
+            - label: "In & Out"
+              value: "5"
+    background_color:
+      example: "[0, 0, 0, 0]"
+      selector:
+        object:
+    name:
+      example: Game night
+      selector:
+        text:
+
+save_playing:
+  target:
+    entity:
+      integration: gemstone_lights
+      domain: light
+  fields:
+    name:
+      required: false
+      example: Canada Day
+      selector:
+        text:
+
+forget_pattern:
+  target:
+    entity:
+      integration: gemstone_lights
+      domain: light
+  fields:
+    name:
+      required: true
+      example: Canada Day
+      selector:
+        text:

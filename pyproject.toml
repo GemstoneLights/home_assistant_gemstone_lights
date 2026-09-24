@@ -1,0 +1,37 @@
+[project]
+name = "gemstone-home-assistant"
+version = "0.6.0"
+description = "Home Assistant integration for Gemstone Lights Hub2 controllers"
+# The floor for Home Assistant 2024.12, the oldest release this integration supports.
+requires-python = ">=3.12"
+
+[dependency-groups]
+dev = [
+    "aiohttp",
+    "pytest",
+    "pytest-asyncio",
+    "pytest-homeassistant-custom-component==0.13.205",
+    "ruff",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "D", "ASYNC", "RUF"]
+ignore = ["D203", "D213"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D100", "D103"]
+
+[tool.coverage.report]
+# Import-time-only lines that cannot execute under a test.
+exclude_also = ["if TYPE_CHECKING:"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra -q"
