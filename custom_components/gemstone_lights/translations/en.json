@@ -1,0 +1,169 @@
+{
+  "config": {
+    "flow_title": "{name} ({host})",
+    "step": {
+      "pick_device": {
+        "title": "Choose a controller",
+        "description": "These controllers answered on your network. Enable Allow Local Commands on the one you pick (Controller > Settings > Advanced Settings) if you have not already.",
+        "data": {
+          "device": "Controller"
+        }
+      },
+      "discovery_confirm": {
+        "title": "Add {name}?",
+        "description": "A Gemstone controller was found at {host}. Enable Allow Local Commands on it (Controller > Settings > Advanced Settings) if you have not already, then submit."
+      },
+      "user": {
+        "title": "Connect to your Gemstone controller",
+        "description": "No controller answered on your network, or yours is on another subnet. The controller announces itself every five minutes; to make it appear now, tap Control4 Identify in the Gemstone app (Device Settings > Advanced Settings) and try again. Or enable Allow Local Commands on it (Settings > Advanced Settings) and enter its IP address.",
+        "data": {
+          "host": "IP address",
+          "port": "Port"
+        },
+        "data_description": {
+          "host": "The controller's address on your network. Give it a DHCP reservation in your router so it does not change.",
+          "port": "Leave at 80. Change it only if you reach the controller through a port-forward, or for the development simulator."
+        }
+      },
+      "reconfigure": {
+        "title": "Update the controller's address",
+        "description": "Enter the controller's new IP address.",
+        "data": {
+          "host": "IP address",
+          "port": "Port"
+        },
+        "data_description": {
+          "host": "The controller's new address.",
+          "port": "Leave at 80 unless you reach the controller through a port-forward."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach a controller at that address. Check the IP and that Allow Local Commands is enabled.",
+      "local_api_disabled": "The controller is on the network but did not answer over HTTP. Turn on Allow Local Commands (Controller > Settings > Advanced Settings) and try again.",
+      "unknown": "The controller answered in an unexpected way."
+    },
+    "abort": {
+      "already_configured": "This controller is already configured.",
+      "already_in_progress": "This controller is already being set up.",
+      "not_gemstone": "That device is not a Gemstone controller.",
+      "reconfigure_successful": "The controller's address was updated.",
+      "wrong_device": "The controller at that address is a different one. Add it as a new device instead of reconfiguring this one."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Polling",
+        "description": "How often to check the controller when nothing is happening.",
+        "data": {
+          "scan_interval": "Idle poll interval"
+        },
+        "data_description": {
+          "scan_interval": "Seconds between checks of an idle controller. For a minute after any activity the integration polls every 5 seconds by itself."
+        }
+      }
+    }
+  },
+  "entity": {
+    "number": {
+      "effect_speed": {
+        "name": "Animation speed"
+      }
+    },
+    "sensor": {
+      "pixel_count": {
+        "name": "Pixel count"
+      },
+      "firmware_spi": {
+        "name": "SPI firmware"
+      },
+      "firmware_wifi": {
+        "name": "Wi-Fi firmware"
+      }
+    },
+    "binary_sensor": {
+      "tcp_enabled": {
+        "name": "TCP enabled"
+      }
+    },
+    "select": {
+      "pattern": {
+        "name": "Pattern"
+      }
+    }
+  },
+  "services": {
+    "play_pattern": {
+      "name": "Play pattern",
+      "description": "Plays an animation with every parameter the controller accepts: up to 20 colours, speed, direction and a background colour.",
+      "fields": {
+        "animation": {
+          "name": "Animation",
+          "description": "The animation to play."
+        },
+        "colors": {
+          "name": "Colours",
+          "description": "One to twenty colours, each as [red, green, blue, warm white] with values 0-255."
+        },
+        "brightness": {
+          "name": "Brightness",
+          "description": "0-255. Defaults to the current brightness."
+        },
+        "speed": {
+          "name": "Speed",
+          "description": "1-255. Defaults to the Animation speed entity."
+        },
+        "direction": {
+          "name": "Direction",
+          "description": "Which way the animation travels. Only some animations move, and each accepts only some directions; anything else falls back to that animation's own default."
+        },
+        "background_color": {
+          "name": "Background colour",
+          "description": "[red, green, blue, warm white] shown behind the animation. Defaults to none."
+        },
+        "name": {
+          "name": "Name",
+          "description": "1-32 characters; shown in the Gemstone app as what is playing. Defaults to the animation's name."
+        }
+      }
+    },
+    "save_playing": {
+      "name": "Save the playing pattern",
+      "description": "Keeps the pattern the controller is playing, so it can be replayed from the Pattern control. Patterns made in the Gemstone app cannot be rebuilt by hand, and the controller cannot store them.",
+      "fields": {
+        "name": {
+          "name": "Name",
+          "description": "What to call it. Defaults to the pattern's own name. Reusing a name replaces that pattern."
+        }
+      }
+    },
+    "forget_pattern": {
+      "name": "Forget a saved pattern",
+      "description": "Drops a pattern this controller kept. The controller itself is not touched.",
+      "fields": {
+        "name": {
+          "name": "Name",
+          "description": "The saved pattern to forget, as it appears in the Pattern control."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "command_failed": {
+      "message": "Controller command failed: {error}"
+    },
+    "invalid_scene": {
+      "message": "The scene could not be built: {reason}"
+    },
+    "no_pattern_playing": {
+      "message": "There is no pattern playing to save. Start one in the Gemstone app or with the play pattern action."
+    },
+    "unknown_pattern": {
+      "message": "No saved pattern called {name}."
+    },
+    "unknown_effect": {
+      "message": "Unknown effect: {effect}"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "domain": "gemstone_lights",
+  "name": "Gemstone Lights",
+  "codeowners": [
+    "@ujjwalmainali7"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "network"
+  ],
+  "dhcp": [
+    {
+      "hostname": "gemstone-*"
+    }
+  ],
+  "documentation": "https://github.com/GemstoneLights/home_assistant_gemstone_lights",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/GemstoneLights/home_assistant_gemstone_lights/issues",
+  "requirements": [],
+  "version": "0.6.0"
+}

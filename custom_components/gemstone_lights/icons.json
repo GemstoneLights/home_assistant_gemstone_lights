@@ -1,0 +1,44 @@
+{
+  "entity": {
+    "number": {
+      "effect_speed": {
+        "default": "mdi:speedometer"
+      }
+    },
+    "sensor": {
+      "pixel_count": {
+        "default": "mdi:led-strip-variant"
+      },
+      "firmware_spi": {
+        "default": "mdi:chip"
+      },
+      "firmware_wifi": {
+        "default": "mdi:wifi"
+      }
+    },
+    "binary_sensor": {
+      "tcp_enabled": {
+        "default": "mdi:lan-disconnect",
+        "state": {
+          "on": "mdi:lan-connect"
+        }
+      }
+    },
+    "select": {
+      "pattern": {
+        "default": "mdi:playlist-star"
+      }
+    }
+  },
+  "services": {
+    "play_pattern": {
+      "service": "mdi:animation-play"
+    },
+    "save_playing": {
+      "service": "mdi:content-save-outline"
+    },
+    "forget_pattern": {
+      "service": "mdi:delete-outline"
+    }
+  }
+}
